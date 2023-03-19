@@ -18,8 +18,8 @@ public class CombineController {
     @GetMapping(value = "/")
     public Response getResponse(){
         Response response = new Response();
-        response.setStudents(studentRepository.findAll());
-        response.setColleges(collegeRepository.findAll());
+        response.setStudentEntities(studentRepository.findAll());
+        response.setCollegeEntities(collegeRepository.findAll());
         return response;
     }
 }

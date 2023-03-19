@@ -1,13 +1,13 @@
 package youtube.java.puzzle.model;
 
 import lombok.Data;
-import youtube.java.puzzle.college.entity.College;
-import youtube.java.puzzle.student.entity.Student;
+import youtube.java.puzzle.college.entity.CollegeEntity;
+import youtube.java.puzzle.student.entity.StudentEntity;
 
 import java.util.List;
 
 @Data
 public class Response {
-    List<Student> students;
-    List<College> colleges;
+    List<StudentEntity> studentEntities;
+    List<CollegeEntity> collegeEntities;
 }

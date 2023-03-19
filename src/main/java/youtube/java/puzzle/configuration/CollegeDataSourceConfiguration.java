@@ -16,7 +16,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariDataSource;
-import youtube.java.puzzle.college.entity.College;
+import youtube.java.puzzle.college.entity.CollegeEntity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableTransactionManagement
@@ -31,7 +34,7 @@ public class CollegeDataSourceConfiguration {
         return new DataSourceProperties();
     }
 
-    @Bean
+    @Bean(name = "batch-datasource")
     @Primary
     @ConfigurationProperties("spring.datasource.college.configuration")
     public DataSource collegeDataSource() {
@@ -43,9 +46,14 @@ public class CollegeDataSourceConfiguration {
     @Bean(name = "collegeEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean collegeEntityManagerFactory(
             EntityManagerFactoryBuilder builder) {
+        Map<String, Object> properties = new HashMap<String, Object>();
+        properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         return builder
                 .dataSource(collegeDataSource())
-                .packages( College.class)
+                .packages(CollegeEntity.class)
+                .properties(properties)
                 .build();
     }
 

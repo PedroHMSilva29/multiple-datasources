@@ -1,7 +1,7 @@
 package youtube.java.puzzle.college.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import youtube.java.puzzle.college.entity.College;
+import youtube.java.puzzle.college.entity.CollegeEntity;
 
-public interface CollegeRepository extends JpaRepository<College, Integer> {
+public interface CollegeRepository extends JpaRepository<CollegeEntity, Integer> {
 }

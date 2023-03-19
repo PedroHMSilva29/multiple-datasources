@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  studentdb:
+    image: postgres
+    ports:
+      - "1234:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=student_database
+    networks:
+      - postgres-compose-network
+
+  collegedb:
+    image: postgres
+    ports:
+      - "1485:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=college_database
+    networks:
+      - postgres-compose-network
+
+  teste-pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pedro@yahoo.com.br
+      - PGADMIN_DEFAULT_PASSWORD=PgAdmin2019!
+    ports:
+      - "16543:80"
+    depends_on:
+      - collegedb
+      - studentdb
+    networks:
+      - postgres-compose-network
+
+networks:
+  postgres-compose-network:
+    driver: bridge
