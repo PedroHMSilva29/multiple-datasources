@@ -7,6 +7,7 @@ import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.task.SyncTaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,14 @@ public class JobSchedulerExecutor {
     @Autowired
     Job job;
 
-    @Scheduled(cron = "*/40 * * * * *")
+    /**
+     * second, minute, hour, day of month, month, day(s) of week
+     * 0 1 1 * * ? - every day 1:01AM
+     * *///40 * * * * * - every 40 seconds
+    /*
+     * @throws Exception
+     **/
+    @Scheduled(cron = "*/10 * * * * *")
     public void perform() throws Exception
     {
         JobParameters params = new JobParametersBuilder()
@@ -31,7 +39,7 @@ public class JobSchedulerExecutor {
 
         SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
         jobLauncher.setJobRepository(repository);
-        //jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        jobLauncher.setTaskExecutor(new SyncTaskExecutor());
         jobLauncher.afterPropertiesSet();
         jobLauncher.run(job, params);
     }

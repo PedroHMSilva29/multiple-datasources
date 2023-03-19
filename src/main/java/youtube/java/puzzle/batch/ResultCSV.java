@@ -17,7 +17,7 @@ public class ResultCSV {
         StudentEntity entity = new StudentEntity();
         entity.setName(this.firstName);
         entity.setAge(this.lastName);
-        entity.setId(this.id);
+        //entity.setId(this.id);
         return entity;
     }
 
